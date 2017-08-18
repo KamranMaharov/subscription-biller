@@ -98,24 +98,13 @@ public class BillinguserResource {
     @PutMapping("/billuser")
     @Timed
     public ResponseEntity<Billinguser> billBillinguser(@RequestBody Long id) throws URISyntaxException {
-        /*log.debug("REST request to delete Billinguser : {}", id);
-        billinguserRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-
-
-
-
-        log.debug("REST request to get Billinguser : {}", id);
-        Billinguser billinguser = billinguserRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(billinguser));*/
-
         log.debug("REST request to bill Billinguser : {}", id);
         Billinguser billinguser = billinguserRepository.findOne(id);
         billinguser.setBalance(billinguser.getBalance() - 10);
         billinguser.setBilldate(billinguser.getBilldate().plus(30, ChronoUnit.DAYS));
         Billinguser result = billinguserRepository.save(billinguser);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, billinguser.getId().toString()))
+            .headers(HeaderUtil.createEntityBillAlert(ENTITY_NAME, billinguser.getId().toString()))
             .body(result);
     }
 
