@@ -134,6 +134,30 @@
                 });
             }]
         })
+        .state('billinguser.bill', {
+            parent: 'billinguser',
+            url: '/{id}/bill',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/billinguser/billinguser-bill-dialog.html',
+                    controller: 'BillinguserBillerController',
+                    controllerAs: 'vm',
+                    size: 'md',
+                    resolve: {
+                        entity: ['Billinguser', function(Billinguser) {
+                            return Billinguser.get({id : $stateParams.id}).$promise;
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('billinguser', null, { reload: 'billinguser' });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
+        })
         .state('billinguser.delete', {
             parent: 'billinguser',
             url: '/{id}/delete',

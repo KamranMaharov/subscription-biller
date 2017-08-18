@@ -20,8 +20,12 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
 import java.util.Optional;
+
+import static org.reflections.util.ConfigurationBuilder.build;
 
 /**
  * REST controller for managing Billinguser.
@@ -76,6 +80,39 @@ public class BillinguserResource {
         if (billinguser.getId() == null) {
             return createBillinguser(billinguser);
         }
+        Billinguser result = billinguserRepository.save(billinguser);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, billinguser.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /billingusers/bill : Bills an existing billinguser.
+     *
+     * @param id the billinguser to bill
+     * @return the ResponseEntity with status 200 (OK) and with body the updated billinguser,
+     * or with status 400 (Bad Request) if the billinguser is not valid,
+     * or with status 500 (Internal Server Error) if the billinguser couldn't be billed
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/billingusers/bill/{id}")
+    @Timed
+    public ResponseEntity<Billinguser> billBillinguser(@PathVariable Long id) throws URISyntaxException {
+        /*log.debug("REST request to delete Billinguser : {}", id);
+        billinguserRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+
+
+
+
+        log.debug("REST request to get Billinguser : {}", id);
+        Billinguser billinguser = billinguserRepository.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(billinguser));*/
+
+        log.debug("REST request to bill Billinguser : {}", id);
+        Billinguser billinguser = billinguserRepository.findOne(id);
+        billinguser.setBalance(billinguser.getBalance() - 10);
+        billinguser.setBilldate(billinguser.getBilldate().plus(30, ChronoUnit.MONTHS));
         Billinguser result = billinguserRepository.save(billinguser);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, billinguser.getId().toString()))
