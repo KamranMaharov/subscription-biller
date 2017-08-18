@@ -1,0 +1,26 @@
+1)create simple angular app-intermediate (1 star)
+https://raibledesigns.com/rd/entry/getting_started_with_angularjs
+Matt Raible
+
+2)angular js tutorial-beginner (10 stars)
+https://www.youtube.com/watch?v=OPxeCiy0RdY
+Derek Banas
+
+
+3)angular js tutorial-beginner (10 starts)
+https://www3.ntu.edu.sg/home/ehchua/programming/webprogramming/AngularJS_Basics.html
+
+
+4)jhipster monolithic(10 stars)
+http://www.baeldung.com/jhipster
+
+
+5)jhipster microservices(10 stars)
+http://www.baeldung.com/jhipster-microservices
+
+
+6)Jhipster mini-book from Matt Raible
+
+
+7)tutorialspoint angularjs
+https://www.tutorialspoint.com/angularjs/angularjs_modules.htm
