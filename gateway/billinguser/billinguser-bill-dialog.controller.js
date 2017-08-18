@@ -22,8 +22,8 @@
         }
 
         function confirmBill (id) {
-            Billingservice.put({id: id},
-                function () {
+            Billingservice.update(id,
+                function (data) {
                     $uibModalInstance.close(true);
                 });
         }
